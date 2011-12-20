@@ -18,6 +18,7 @@ class ComplexType extends Configuration
     private $name;
     private $value;
     private $isNillable = false;
+    private $minOccurs = 1;
 
     public function getName()
     {
@@ -52,5 +53,15 @@ class ComplexType extends Configuration
     public function getAliasName()
     {
         return 'complextype';
+    }
+
+    public function getMinOccurs()
+    {
+        return $this->minOccurs;
+    }
+
+    public function setMinOccurs($minOccurs)
+    {
+            $this->minOccurs = (int) $minOccurs;
     }
 }

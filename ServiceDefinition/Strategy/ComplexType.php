@@ -75,6 +75,10 @@ class ComplexType extends AbstractStrategy
                 $element->setAttribute('nillable', 'true');
             }
 
+            if (1 !== $annotationComplexType->getMinOccurs()) {
+                $element->setAttribute('minOccurs', $annotationComplexType->getMinOccurs());
+            }
+
             $all->appendChild($element);
         }
 
