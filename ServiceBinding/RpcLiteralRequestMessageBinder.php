@@ -54,7 +54,7 @@ class RpcLiteralRequestMessageBinder implements MessageBinderInterface
         }
 
         // @TODO Fix array reference
-        if (isset($this->definitionComplexTypes[$phpType])) {
+        if (isset($this->definitionComplexTypes[$phpType]) && $message) {
             if ($isArray) {
                 if (isset($message->item)) {
                     foreach ($message->item as $complexType) {
