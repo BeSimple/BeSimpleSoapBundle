@@ -11,8 +11,6 @@
 namespace BeSimple\SoapBundle\ServiceDefinition\Strategy;
 
 use BeSimple\SoapBundle\ServiceDefinition\Loader\AnnotationComplexTypeLoader;
-
-use BeSimple\SoapCommon\Classmap;
 use Zend\Soap\Wsdl;
 use Zend\Soap\Wsdl\Strategy\AbstractStrategy;
 
@@ -22,13 +20,11 @@ use Zend\Soap\Wsdl\Strategy\AbstractStrategy;
 class ComplexType extends AbstractStrategy
 {
     private $loader;
-    private $classmap;
     private $definition;
 
-    public function __construct(AnnotationComplexTypeLoader $loader, Classmap $classmap, $definition)
+    public function __construct(AnnotationComplexTypeLoader $loader, $definition)
     {
         $this->loader     = $loader;
-        $this->classmap   = $classmap;
         $this->definition = $definition;
     }
 
@@ -40,6 +36,8 @@ class ComplexType extends AbstractStrategy
      */
     public function addComplexType($type)
     {
+        $classmap = $this->definition->getClassmap();
+
         if (null !== $soapType = $this->scanRegisteredTypes($type)) {
             return $soapType;
         }
@@ -53,7 +51,9 @@ class ComplexType extends AbstractStrategy
         $soapTypeName = Wsdl::translateType($type);
         $soapType     = 'tns:'.$soapTypeName;
 
-        $this->classmap->add($soapTypeName, $type);
+        if (!$classmap->has($soapTypeName)) {
+            $classmap->add($soapTypeName, $type);
+        }
 
         // Register type here to avoid recursion
         $this->getContext()->addType($type, $soapType);
