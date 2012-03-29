@@ -104,6 +104,8 @@ class AnnotationClassLoader implements LoaderInterface
                     }
 
                     $serviceReturn = new Definition\Type($annotation->getPhpType(), $annotation->getXmlType());
+                } elseif ($annotation instanceof Annotation\Documentation) {
+                    $serviceMethod->setDocumentation($annotation->getValue());
                 }
             }
 

@@ -19,6 +19,7 @@ class Method
     private $arguments;
     private $headers;
     private $return;
+    private $documentation;
 
     public function __construct($name = null, $controller = null, array $headers = array(), array $arguments = array(), Type $return = null)
     {
@@ -82,5 +83,15 @@ class Method
     public function setReturn(Type $return)
     {
         $this->return = $return;
+    }
+
+    public function getDocumentation()
+    {
+        return $this->documentation;
+    }
+
+    public function setDocumentation($documentation)
+    {
+        $this->documentation = $documentation;
     }
 }
