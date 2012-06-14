@@ -38,7 +38,7 @@ class WsdlDumper implements DumperInterface
     }
 
     public function dumpServiceDefinition(ServiceDefinition $definition, $endpoint)
-    {
+    {        
         Assert::thatArgumentNotNull('definition', $definition);
 
         $this->definition = $definition;
@@ -78,6 +78,10 @@ class WsdlDumper implements DumperInterface
                 $this->qualify($this->getRequestMessageName($method)),
                 $this->qualify($this->getResponseMessageName($method))
             );
+
+            if ($method->getDocumentation()) {
+                $this->wsdl->addDocumentation($portOperation, $method->getDocumentation());
+            }
 
             $baseBinding   =
             $inputBinding  =

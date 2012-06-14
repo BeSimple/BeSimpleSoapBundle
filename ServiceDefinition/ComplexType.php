@@ -18,6 +18,7 @@ class ComplexType
     private $name;
     private $value;
     private $isNillable = false;
+    private $minOccurs = 1;
 
     public function getName()
     {
@@ -47,5 +48,17 @@ class ComplexType
     public function setNillable($isNillable)
     {
         $this->isNillable = (bool) $isNillable;
+    }
+
+    public function getMinOccurs()
+    {
+        return $this->minOccurs;
+    }
+
+    public function setMinOccurs($minOccurs)
+    {
+        if (null !== $minOccurs) {
+            $this->minOccurs = (int) $minOccurs;
+        }
     }
 }
