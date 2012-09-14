@@ -12,15 +12,15 @@ Download `BeSimple\\SoapCommon`_ and `BeSimple\\SoapServer`_ (only for the serve
 
     ; deps file
     [BeSimple\SoapCommon]
-        git=http://github.com/BeSimple/SoapCommon
+        git=git://github.com/BeSimple/BeSimpleSoapCommon.git
         target=/besimple-soapcommon
 
     [BeSimple\SoapClient]
-        git=http://github.com/BeSimple/SoapClient
+        git=git://github.com/BeSimple/BeSimpleSoapClient.git
         target=/besimple-soapclient
 
     [BeSimple\SoapServer]
-        git=http://github.com/BeSimple/SoapServer
+        git=git://github.com/BeSimple/BeSimpleSoapServer.git
         target=/besimple-soapserver
 
 
