@@ -12,12 +12,12 @@ namespace BeSimple\SoapBundle\ServiceDefinition\Strategy;
 
 use BeSimple\SoapBundle\ServiceDefinition\Loader\AnnotationComplexTypeLoader;
 use Zend\Soap\Wsdl;
-use Zend\Soap\Wsdl\Strategy\AbstractStrategy;
+use Zend\Soap\Wsdl\ComplexTypeStrategy\AbstractComplexTypeStrategy;
 
 /**
  * @author Francis Besset <francis.besset@gmail.com>
  */
-class ComplexType extends AbstractStrategy
+class ComplexType extends AbstractComplexTypeStrategy
 {
     private $loader;
     private $definition;
