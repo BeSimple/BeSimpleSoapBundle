@@ -36,6 +36,7 @@ class RpcLiteralResponseMessageBinder implements MessageBinderInterface
     {
         $isArray = false;
 
+
         if (preg_match('/^([^\[]+)\[\]$/', $phpType, $match)) {
             $isArray = true;
             $phpType = $match[1];
@@ -68,14 +69,19 @@ class RpcLiteralResponseMessageBinder implements MessageBinderInterface
         $this->messageRefs[$hash] = $message;
 
         if (!$message instanceof $phpType) {
-            throw new \InvalidArgumentException(sprintf('The instance class must be "%s", "%s" given.', get_class($message), $phpType));
+            throw new \InvalidArgumentException(sprintf('The instance class must be "%s", "%s" given.', $phpType, get_class($message)));
         }
 
         $r = new \ReflectionClass($message);
         foreach ($this->definitionComplexTypes[$phpType] as $type) {
             $p = $r->getProperty($type->getName());
+            // hasMethod() and getMethod() are case insensitive
+            $getterMethod = $r->hasMethod('get' . $type->getName()) ? $r->getMethod('get' . $type->getName()) : null;
+            $setterMethod = $r->hasMethod('set' . $type->getName()) ? $r->getMethod('set' . $type->getName()) : null;
             if ($p->isPublic()) {
-                $value = $message->{$type->getName()};
+                $value = $p->getValue($message);
+            } elseif ($getterMethod) {
+                $value = $getterMethod->invoke($message);
             } else {
                 $p->setAccessible(true);
                 $value = $p->getValue($message);
@@ -85,8 +91,11 @@ class RpcLiteralResponseMessageBinder implements MessageBinderInterface
                 $value = $this->processType($type->getValue(), $value);
 
                 if ($p->isPublic()) {
-                    $message->{$type->getName()} = $value;
+                    $p->setValue($message, $value);
+                } elseif ($setterMethod) {
+                    $setterMethod->invoke($message, $value);
                 } else {
+                    $p->setAccessible(true);
                     $p->setValue($message, $value);
                 }
             }
