@@ -75,6 +75,7 @@ class Configuration
                     ->children()
                         ->scalarNode('wsdl')->isRequired()->end()
                         ->scalarNode('user_agent')->end()
+                        ->scalarNode('timeout')->end()
                         ->scalarNode('cache_type')
                             ->validate()
                                 ->ifNotInArray($this->cacheTypes)

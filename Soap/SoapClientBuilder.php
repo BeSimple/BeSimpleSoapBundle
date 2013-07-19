@@ -29,6 +29,10 @@ class SoapClientBuilder extends BaseSoapClientBuilder
             $this->withWsdlCache($options['cache_type']);
         }
 
+        if (isset($options['timeout'])) {
+            $this->withTimeout($options['timeout']);
+        }
+
         if ($classmap) {
             $this->withClassmap($classmap);
         }
@@ -54,6 +58,7 @@ class SoapClientBuilder extends BaseSoapClientBuilder
             'cache_type' => null,
             'exceptions' => true,
             'user_agent' => 'BeSimpleSoap',
+            'timeout'    => 15,
         );
 
         // check option names and live merge, if errors are encountered Exception will be thrown
