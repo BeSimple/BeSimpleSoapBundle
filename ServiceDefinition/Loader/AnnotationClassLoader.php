@@ -154,11 +154,11 @@ class AnnotationClassLoader extends Loader
 
             $loaded = $complexTypeResolver->load($phpType);
             $complexType = new ComplexType($phpType, isset($loaded['alias']) ? $loaded['alias'] : $phpType);
+            $this->typeRepository->addComplexType($complexType);
+
             foreach ($loaded['properties'] as $name => $property) {
                 $complexType->add($name, $this->loadType($property->getValue()), $property->isNillable());
             }
-
-            $this->typeRepository->addComplexType($complexType);
         }
 
         return $phpType;
