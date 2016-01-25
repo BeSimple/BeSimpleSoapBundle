@@ -13,7 +13,7 @@ namespace BeSimple\SoapBundle\Converter;
 use BeSimple\SoapBundle\ServiceDefinition\ServiceDefinition;
 use BeSimple\SoapBundle\Util\Assert;
 use BeSimple\SoapBundle\Util\QName;
-use BeSimple\SoapBundle\Util\String;
+use BeSimple\SoapBundle\Util\Strings;
 
 /**
  * @author Christian Kerl <christian-kerl@web.de>

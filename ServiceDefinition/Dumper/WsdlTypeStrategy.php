@@ -13,7 +13,7 @@ namespace BeSimple\SoapBundle\ServiceDefinition\Dumper;
 use BeSimple\SoapBundle\ServiceDefinition\ServiceDefinition;
 use BeSimple\SoapBundle\ServiceDefinition\Loader\AnnotationComplexTypeLoader;
 use BeSimple\SoapBundle\ServiceDefinition\Strategy\ComplexType;
-use BeSimple\SoapBundle\Util\String;
+use BeSimple\SoapBundle\Util\Strings;
 
 use Zend\Soap\Exception;
 use Zend\Soap\Wsdl as BaseWsdl;
@@ -68,7 +68,7 @@ class WsdlTypeStrategy implements ComplexTypeStrategyInterface
             throw new \LogicException(sprintf('Cannot add complex type "%s", no context is set for this composite strategy.', $type));
         }
 
-        $strategy = String::endsWith($type, '[]') ? $this->getArrayStrategy() : $this->getTypeStrategy();
+        $strategy = Strings::endsWith($type, '[]') ? $this->getArrayStrategy() : $this->getTypeStrategy();
 
         return $strategy->addComplexType($type);
     }
