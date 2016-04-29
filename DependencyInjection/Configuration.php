@@ -25,6 +25,8 @@ class Configuration
 {
     private $cacheTypes = array('none', 'disk', 'memory', 'disk_memory');
     private $proxyAuth = array('basic', 'ntlm');
+    private $authType = array('basic', 'digest');
+    private $soapType = array('soap_1_1', 'soap_1_2');
 
     /**
      * Generates the configuration tree.
@@ -82,6 +84,32 @@ class Configuration
                         ->prototype('array')
                             ->children()
                                 ->scalarNode('wsdl')->isRequired()->end()
+                                ->arrayNode('options')
+                                    ->children()
+                                        ->scalarNode('location')->defaultNull()->end()
+                                        ->scalarNode('uri')->defaultNull()->end()
+                                        ->scalarNode('soap_version')
+                                            ->validate()
+                                                ->ifNotInArray($this->soapType)
+                                                ->thenInvalid(sprintf('The soap type has to be either: %s', implode(', ', $this->authType)))
+                                            ->end()
+                                        ->end()
+                                    ->end()
+                                ->end()
+                                ->arrayNode('authentication')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->scalarNode('login')->defaultNull()->end()
+                                        ->scalarNode('password')->defaultNull()->end()
+                                        ->scalarNode('local_cert')->defaultNull()->end()
+                                        ->scalarNode('type')->defaultNull()
+                                            ->validate()
+                                                ->ifNotInArray($this->authType)
+                                                ->thenInvalid(sprintf('The auth type has to be either: %s', implode(', ', $this->authType)))
+                                            ->end()
+                                        ->end()
+                                    ->end()
+                                ->end()
                                 ->scalarNode('user_agent')->end()
                                 ->scalarNode('cache_type')
                                     ->validate()

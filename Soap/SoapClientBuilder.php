@@ -21,6 +21,10 @@ class SoapClientBuilder extends BaseSoapClientBuilder
             ->withTrace($options['debug'])
         ;
 
+        if (isset($options['options'])) {
+            $this->soapOptions = array_merge($this->soapOptions, $options['options']);
+        }
+
         if (isset($options['user_agent'])) {
             $this->withUserAgent($options['user_agent']);
         }
@@ -54,6 +58,7 @@ class SoapClientBuilder extends BaseSoapClientBuilder
             'cache_type' => null,
             'exceptions' => true,
             'user_agent' => 'BeSimpleSoap',
+            'options'    => array()
         );
 
         // check option names and live merge, if errors are encountered Exception will be thrown
