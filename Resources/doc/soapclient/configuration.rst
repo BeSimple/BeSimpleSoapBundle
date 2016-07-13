@@ -27,6 +27,11 @@ Configure your first client in your config file:
                     password: ~
                     auth:     ~ # can be 'basic' or 'ntlm'
 
+                # digest (optional)
+                digest:
+                    certificate: path to certificate
+                    passphrase: (optional)
+
 Using client
 ------------
 

@@ -115,6 +115,13 @@ class BeSimpleSoapExtension extends Extension
                 ));
             }
 
+            $digest = $options['digest'];
+            if (false !== $digest['certificate']) {
+                $definition->addMethodCall('withDigestAuthentication', array(
+                    $digest['certificate'], $digest['passphrase']
+                ));
+            }
+
             if (isset($defOptions['cache_type'])) {
                 $defOptions['cache_type'] = $this->getCacheType($defOptions['cache_type']);
             }
